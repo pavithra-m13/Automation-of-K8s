@@ -22,7 +22,8 @@ CONTROLLERS=("server")
 
 for host in "${CONTROLLERS[@]}"; do
   echo "[*] Copying encryption-config.yaml to $host"
-  scp "$OUTPUT" root@"$host":~/
+  scp "$OUTPUT" root@"$host":/var/lib/kubernetes/encryption-config.yaml
 done
+
 
 echo "[✓] Encryption config created and distributed successfully"

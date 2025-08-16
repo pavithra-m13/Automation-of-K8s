@@ -100,7 +100,7 @@ resource "null_resource" "setup_ssh" {
   }
   provisioner "remote-exec" {
     inline = [
-      "chmod 600 /home/ubuntu/ec2-key.pem"
+      "chmod 400 /home/ubuntu/ec2-key.pem"
     ]
 
     connection {
@@ -111,23 +111,10 @@ resource "null_resource" "setup_ssh" {
     }
   }
 
-  provisioner "file" {
-    source      = "/mnt/c/k8s/scripts/setup-ssh.sh"
-    destination = "/home/ubuntu/setup-ssh.sh"
 
-    connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      host        = aws_instance.jumpbox.public_ip
-      private_key = file(var.private_key_path)
-    }
-  }
 
   provisioner "remote-exec" {
-    inline = [
-      "chmod +x /home/ubuntu/setup-ssh.sh",
-      "bash /home/ubuntu/setup-ssh.sh"
-    ]
+    script = "/mnt/c/k8s/scripts/setup-ssh.sh"
     connection {
       type        = "ssh"
       user        = "ubuntu"

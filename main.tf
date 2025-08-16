@@ -11,7 +11,7 @@ resource "aws_key_pair" "generated_key" {
 resource "local_file" "private_key" {
   content  = tls_private_key.mykey.private_key_pem
   filename = "${path.module}/${var.key_name}.pem"
-  file_permission = "0400"
+  file_permission = "400"
 }
 
 module "vpc"{
